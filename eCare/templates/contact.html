@@ -1,0 +1,290 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'images/logo-icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+    <link rel="stylesheet" href="{% static 'css/query.css' %}">
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="{% url 'index' %}" class="logo"><span class="logo-icon"></span><span>e<strong>Care</strong></span></a>
+            <nav class="nav-center">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'services' %}">E-Services</a>
+                <a href="{% url 'assistance' %}">Assistance</a>
+                <a href="{% url 'contact' %}" class="active">Contact</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn signin mobile-signin" style="display: none;">My Profile</a>
+                {% else %}
+                <a href="{% url 'account' %}" class="btn signin mobile-signin" style="display: none;">Sign In</a>
+                {% endif %}
+            </nav>
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="nav-avatar-btn" title="My Profile">
+                {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="Avatar" class="nav-avatar-img">
+                {% else %}
+                    <span class="nav-avatar-initials">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</span>
+                {% endif %}
+            </a>
+            {% else %}
+            <a href="{% url 'account' %}" class="btn signin">Sign In</a>
+            {% endif %}
+
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="page contact-page-new">
+        <div class="content-wrapper-new" id="top-contact">
+            <div class="contact-header">
+                <div class="section-label">Get in touch</div>
+                <h2>Contact our team</h2>
+                <p>Got any questions about the product or scaling on our platform? We're here to help.<br>Chat to our friendly team 24/7 and get onboard in less than 5 minutes.</p>
+            </div>
+
+            <div class="contact-two-column">
+                <div class="contact-form-container">
+                    <form id="contactForm" class="new-contact-form">
+                        <div class="form-row-new">
+                            <div class="form-group-new">
+                                <label for="firstName">First name</label>
+                                <input type="text" id="firstName" name="firstName" placeholder="First name" required>
+                            </div>
+                            <div class="form-group-new">
+                                <label for="lastName">Last name</label>
+                                <input type="text" id="lastName" name="lastName" placeholder="Last name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group-new">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                        </div>
+
+                        <div class="form-group-new">
+                            <label for="phone">Phone number</label>
+                            <div class="phone-input">
+                                <select id="countryCode" name="countryCode" class="country-select">
+                                    <option value="+1"  data-code="US" data-placeholder="555 000-0000" selected>🇺🇸</option>
+                                    <option value="+63" data-code="PH" data-placeholder="912 345 6789">🇵🇭</option>
+                                    <option value="+44" data-code="UK" data-placeholder="7700 900000">🇬🇧</option>
+                                    <option value="+1"  data-code="CA" data-placeholder="416 000-0000">🇨🇦</option>
+                                    <option value="+61" data-code="AU" data-placeholder="4 0000 0000">🇦🇺</option>
+                                    <option value="+81" data-code="JP" data-placeholder="90 0000 0000">🇯🇵</option>
+                                    <option value="+49" data-code="DE" data-placeholder="170 0000000">🇩🇪</option>
+                                    <option value="+33" data-code="FR" data-placeholder="6 00 00 00 00">🇫🇷</option>
+                                    <option value="+91" data-code="IN" data-placeholder="98765 43210">🇮🇳</option>
+                                    <option value="+86" data-code="CN" data-placeholder="138 0000 0000">🇨🇳</option>
+                                </select>
+                                <div class="phone-field-wrapper">
+                                    <span class="dial-code-prefix" id="dialCodePrefix">+1</span>
+                                    <input type="tel" id="phone" name="phone" placeholder="555 000-0000" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group-new">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Leave us a message..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit-new">Send message</button>
+                    </form>
+                </div>
+
+                <div class="contact-options-container">
+                    <div class="contact-option-section">
+                        <h3>Chat with us</h3>
+                        <p>Speak to our friendly team via live chat.</p>
+                        <div class="contact-links">
+                            <a href="#" class="contact-link-item chat-link">
+                                <i class="fa-regular fa-comment-dots"></i>
+                                <span>Start a live chat</span>
+                            </a>
+                            <a href="#" class="contact-link-item">
+                                <i class="fa-regular fa-envelope"></i>
+                                <span>Shoot us an email</span>
+                            </a>
+                            <a href="#" class="contact-link-item">
+                                <i class="fa-brands fa-x-twitter"></i>
+                                <span>Message us on X</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-info">
+                        <h3>Call us</h3>
+                        <p>Call our team Mon-Fri from 8am to 5pm.</p>
+                        <div class="contact-links">
+                            <a href="tel:+16555000000" class="">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>+1 (555) 000-0000</span>
+                            </a>
+                        </div>
+
+                        <h3>Visit us</h3>
+                        <p>Chat to us in person at our Melbourne HQ.</p>
+                        <div class="contact-links">
+                            <a href="#" class="">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>100 Smith Street, Collingwood VIC 3066</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="content-wrapper">
+            <div class="section-label">FAQ</div>
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about our services and support</p>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What are your operating hours?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our office is open Monday to Friday, 8:00 AM to 5:00 PM. However, our live chat support
+                            is available 24/7, and our emergency hotline (911) operates around the clock for urgent
+                            matters.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How quickly will I receive a response?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Email inquiries are typically answered within 24 hours during business days. Our live chat
+                            responds within minutes during operating hours. Emergency requests through our hotline receive
+                            immediate attention.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I visit your office without an appointment?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, walk-ins are welcome during office hours. However, we recommend booking an appointment
+                            through our online system to ensure shorter wait times and guaranteed assistance.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do you provide services in other languages?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! Our team speaks English, Filipino/Tagalog, and several regional languages. We can also
+                            arrange interpretation services for other languages with advance notice.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How do I report a technical issue with the platform?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Please use the contact form above and select "Technical Support" as the subject. Describe the
+                            issue in detail, including any error messages. For urgent technical issues, you can also call our
+                            support line.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can organizations partner with eCare?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely! We welcome partnerships with NGOs, government agencies, and private
+                            organizations. Please contact us via email at support@ecare.com or use the contact form above.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h3>Ready to Get Started?</h3>
+            <p>Join thousands of community members who have already experienced the ease and transparency of our digital services.</p>
+            
+            <div class="cta-buttons">
+                <a href="{% url 'assistance' %}" id="ctaChat" class="btn primary">Start Live Chat</a>
+                <a href="#top-contact" class="btn outline">Call Us Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <h1 class="logo"><span>e<strong>Care</strong></span></h1>
+                    <p>Empowering communities through digital innovation and transparent governance.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/" aria-label="Twitter" target="_blank"><i class="fa-brands fa-x-twitter" ></i></a>
+                        <a href="https://instagram.com/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h1>Services</h1>
+                        <a href="{% url 'services' %}#clearance">Online Clearance</a>
+                        <a href="{% url 'services' %}#appointment">Appointments</a>
+                        <a href="{% url 'services' %}#reporting">Incident Reports</a>
+                        <a href="{% url 'services' %}#volunteer">Volunteer Program</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h1>Support</h1>
+                        <a href="{% url 'assistance' %}">Request Help</a>
+                        <a href="{% url 'contact' %}">Contact Us</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Documentation</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h1>About</h1>
+                        <a href="{% url 'about' %}">Our Mission</a>
+                        <a href="{% url 'about' %}">Our Team</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 eCare. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-to-top" id="scrollToTop">↑</button>
+    <script type="module" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'images/logo-icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/query.css' %}">
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="{% url 'index' %}" class="logo"><span class="logo-icon"></span><span>e<strong>Care</strong></span></a>
+            <nav class="nav-center">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'about' %}" class="active">About</a>
+                <a href="{% url 'services' %}">E-Services</a>
+                <a href="{% url 'assistance' %}">Assistance</a>
+                <a href="{% url 'contact' %}">Contact</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn signin mobile-signin" style="display: none;">My Profile</a>
+                {% else %}
+                <a href="{% url 'account' %}" class="btn signin mobile-signin" style="display: none;">Sign In</a>
+                {% endif %}
+            </nav>
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="nav-avatar-btn" title="My Profile">
+                {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="Avatar" class="nav-avatar-img">
+                {% else %}
+                    <span class="nav-avatar-initials">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</span>
+                {% endif %}
+            </a>
+            {% else %}
+            <a href="{% url 'account' %}" class="btn signin">Sign In</a>
+            {% endif %}
+
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="page about-intro">
+        <div class="content-wrapper">
+            <div class="about-grid">
+                <div class="about-visual">
+                    <div class="about-image-card">
+                        <img src="{% static 'images/a1.jpg' %}" alt="">
+                    </div>
+
+                    <div class="about-image-card">
+                        <img src="{% static 'images/a2.jpg' %}" alt="">
+                    </div>
+                </div>
+                
+                <div class="about-text">
+                    <div class="section-label">Who We Are</div>
+                    <h2>Empowering Communities Through Digital Innovation</h2>
+                    <p>Community Connect is a digital platform designed to strengthen trust, accessibility, and assistance within local communities. We bridge the gap
+                        between citizens and essential services through technology, transparency, and dedication to public welfare.
+                    </p>
+                    <p>Founded in 2024, we've grown from a small initiative to serve over 10,000 community members across multiple barangays. Our platform has processed
+                        thousands of service requests, connected volunteers with opportunities, and provided emergency assistance when families needed it most.</p>
+
+                    <div class="about-stats">
+                        <div class="about-stat-item">
+                            <h3 class="counter" data-target="10000">0</h3><span>Active Users</span>
+                        </div>
+                        <div class="about-stat-item">
+                            <h3 class="counter" data-target="25">0</h3><span>Barangays Served</span>
+                        </div>
+                        <div class="about-stat-item">
+                            <h3 class="counter" data-target="50">0</h3><span>Partner Organizations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-vision">
+        <div class="content-wrapper">
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <h3>Our Mission</h3>
+                    <p>To provide a secure, transparent, and user-friendly digital service system that connects citizens with essential community support. We strive to eliminate
+                        barriers to access, reduce bureaucratic delays, and ensure every community member can receive the help they need, when they need it.</p>
+                </div>
+
+                <div class="mv-card">
+                    <h3>Our Vision</h3>
+                    <p>A digitally empowered community where help and services are accessible to everyone. We envision a future where technology serves as an enabler of equity, transparency,
+                        and rapid response to community needs—creating stronger, more resilient neighborhoods.</p>
+                </div>
+
+                <div class="mv-card">
+                    <h3>Our Values</h3>
+                    <ul>
+                        <li><strong>Transparency:</strong> Every action is visible and accountable</li>
+                        <li><strong>Accessibility:</strong> Services available to all, regardless of background</li>
+                        <li><strong>Integrity:</strong> Honest, ethical practices in everything we do</li>
+                        <li><strong>Innovation:</strong> Continuously improving through technology</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="content-wrapper">
+            <div class="section-label">Our Journey</div>
+            <h2 class="section-title">Building The Future Together</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>2024 - Launch</h4>
+                        <p>Platform launched in first barangay with 500 registered users</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Q2 2024 - Expansion</h4>
+                        <p>Expanded to 10 barangays, introduced online clearance system</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Q3 2024 - Innovation</h4>
+                        <p>Launched mobile app and 24/7 emergency assistance feature</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Q4 2024 - Recognition</h4>
+                        <p>Awarded "Best Digital Governance Initiative" by local government</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>2025 - Growth</h4>
+                        <p>Serving 25 barangays with 10,000+ active users</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>2026 - Today</h4>
+                        <p>Continuing to innovate and expand services for our community</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="partners-section">
+        <div class="content-wrapper">
+            <div class="partners-container">
+                <div class="partners-text">
+                    <div class="section-label">Our Partners</div>
+                    <h2 class="section-title">Working Together For The Community</h2>
+                    <p>We partner with local organizations, government offices, and community members to deliver services that truly matter. Our e-services platform makes accesing support quick and convenient. Together, we're building a stronger, more connected community for everyone.</p>
+                </div>
+
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fa-solid fa-handshake"></i></div>
+                        <p>NGOs & Foundations</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fa-solid fa-building-lock"></i></div>
+                        <p>Private Sector Partners</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fa-solid fa-user"></i></div>
+                        <p>Community Organizations</p>
+                    </div>
+                </div>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fa-solid fa-landmark-flag"></i></div>
+                        <p>Local Government Units</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fa-solid fa-hospital"></i></div>
+                        <p>Healthcare Providers</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <p>Educational Institutions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="content-wrapper">
+            <div class="section-label">Meet The Team</div>
+            <h2 class="section-title">The People Behind eCare</h2>
+            <p class="section-description">Our dedicated team of public servants, technologists, and community advocates working to make a difference.</p>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="{% static 'images/t1.jpg' %}" alt="">
+                    </div>
+                    <div class="team-description">
+                        <h4>Neil Masion</h4>
+                        <p class="team-role">Executive Director</p>
+                        <p class="team-bio">15+ years in public service and community development</p>
+                    </div>  
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="{% static 'images/t2.jpg' %}" alt="">
+                    </div>
+                    <div class="team-description">
+                        <h4>Sarah Chen</h4>
+                        <p class="team-role">Chief Technology Officer</p>
+                        <p class="team-bio">Expert in digital governance and civic tech solutions</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="{% static 'images/t3.jpg' %}" alt="">
+                    </div>
+                    <div class="team-description">
+                        <h4>Michael Brown</h4>
+                        <p class="team-role">Community Manager</p>
+                        <p class="team-bio">Connecting communities with resources for over 10 years</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="{% static 'images/t4.jpg' %}" alt="">
+                    </div>
+                    <div class="team-description">
+                        <h4>William Davis</h4>
+                        <p class="team-role">Operations Manager</p>
+                        <p class="team-bio">Ensuring smooth operations and rapid response times</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="{% static 'images/t5.jpg' %}" alt="">
+                    </div>
+                    <div class="team-description">
+                        <h4>Mike Wilson</h4>
+                        <p class="team-role">Security Officer</p>
+                        <p class="team-bio">Protecting user data and maintaining platform security</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="{% static 'images/t6.jpg' %}" alt="">
+                    </div>
+                    <div class="team-description">
+                        <h4>Kaitlyn Miller</h4>
+                        <p class="team-role">User Experience Lead</p>
+                        <p class="team-bio">Designing accessible interfaces for all community members</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h3>Want To Partner With Us?</h3>
+            <p>Join us in building a more connected and empowered community. Let's work together to make a difference.</p>
+           
+            <div class="cta-buttons">
+                <a href="{% url 'assistance' %}" class="btn primary">Get In Touch</span><i class="fa-solid fa-arrow-right"></i></a>
+                <a href="{% url 'services' %}" class="btn outline">Explore Services</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <h1 class="logo"><span>e<strong>Care</strong></span></h1>
+                    <p>Empowering communities through digital innovation and transparent governance.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/" aria-label="Twitter" target="_blank"><i class="fa-brands fa-x-twitter" ></i></a>
+                        <a href="https://instagram.com/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h1>Services</h1>
+                        <a href="{% url 'services' %}#clearance">Online Clearance</a>
+                        <a href="{% url 'services' %}#appointment">Appointments</a>
+                        <a href="{% url 'services' %}#reporting">Incident Reports</a>
+                        <a href="{% url 'services' %}#volunteer">Volunteer Program</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h1>Support</h1>
+                        <a href="{% url 'assistance' %}">Request Help</a>
+                        <a href="{% url 'contact' %}">Contact Us</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Documentation</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h1>About</h1>
+                        <a href="{% url 'about' %}">Our Mission</a>
+                        <a href="{% url 'about' %}">Our Team</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 eCare. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-to-top" id="scrollToTop">↑</button>
+    <script type="module" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

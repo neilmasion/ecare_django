@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'images/logo-icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+    <link rel="stylesheet" href="{% static 'css/query.css' %}">
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="{% url 'index' %}" class="logo"><span class="logo-icon"></span><span>e<strong>Care</strong></span></a>
+            <nav class="nav-center">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'services' %}" class="active">E-Services</a>
+                <a href="{% url 'assistance' %}">Assistance</a>
+                <a href="{% url 'contact' %}">Contact</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn signin mobile-signin" style="display: none;">My Profile</a>
+                {% else %}
+                <a href="{% url 'account' %}" class="btn signin mobile-signin" style="display: none;">Sign In</a>
+                {% endif %}
+            </nav>
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="nav-avatar-btn" title="My Profile">
+                {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="Avatar" class="nav-avatar-img">
+                {% else %}
+                    <span class="nav-avatar-initials">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</span>
+                {% endif %}
+            </a>
+            {% else %}
+            <a href="{% url 'account' %}" class="btn signin">Sign In</a>
+            {% endif %}
+
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="page services-page">
+        <div class="content-wrapper">
+            <div class="services-intro">
+                <div class="section-label">Available Services</div>
+                <h2>Everything You Need, All In One Place</h2>
+                <p>Our comprehensive suite of digital services is designed to make your interactions with community services faster, easier, and more transparent.</p>
+            </div>
+
+            <div class="service-categories">
+                <button class="category-btn active" data-category="all">All Services</button>
+                <button class="category-btn" data-category="documents">Documents</button>
+                <button class="category-btn" data-category="appointments">Appointments</button>
+                <button class="category-btn" data-category="emergency">Emergency</button>
+                <button class="category-btn" data-category="community">Community</button>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card" data-category="documents">
+                    <div class="service-image">
+                        <img src="{% static 'images/s1.jpg' %}" alt="Online Clearance Request">
+                        <div class="service-badge prime">Popular</div>
+                    </div>
+
+                    <div class="service-content">
+                        <div class="service-price">₱50 <span>Service Fee</span></div>
+                        <h3 class="service-title">Online Clearance Request</h3>
+                        <p class="service-location"><i class="fas fa-location-dot"></i> Barangay Office, Processing Center</p>
+                        <div class="service-meta">
+                            <span><i class="fas fa-clock"></i> 24hrs</span>
+                            <span><i class="fas fa-file-lines"></i> Documents</span>
+                        </div>
+                        <button class="btn-view-details">View Details</button>
+                    </div>
+                </div>
+
+                <div class="service-card" data-category="appointments">
+                    <div class="service-image">
+                        <img src="{% static 'images/s2.jpg' %}" alt="Appointment Booking">
+                    </div>
+
+                    <div class="service-content">
+                        <div class="service-price">Free <span>No Fee</span></div>
+                        <h3 class="service-title">Appointment Booking System</h3>
+                        <p class="service-location"><i class="fas fa-location-dot"></i> Virtual & On-site Available</p>
+                        <div class="service-meta">
+                            <span><i class="fas fa-calendar"></i> 15min slots</span>
+                            <span><i class="fas fa-users"></i> Appointments</span>
+                        </div>
+                        <button class="btn-view-details">View Details</button>
+                    </div>
+                </div>
+
+                <div class="service-card" data-category="emergency">
+                    <div class="service-image">
+                        <img src="{% static 'images/s3.jpg' %}" alt="Incident Reporting">
+                        <div class="service-badge urgent">Urgent</div>
+                    </div>
+
+                    <div class="service-content">
+                        <div class="service-price">Free <span>Emergency</span></div>
+                        <h3 class="service-title">Incident Reporting System</h3>
+                        <p class="service-location"><i class="fas fa-location-dot"></i> Emergency Response Unit</p>
+                        <div class="service-meta">
+                            <span><i class="fas fa-bolt"></i> Instant</span>
+                            <span><i class="fas fa-shield"></i> Emergency</span>
+                        </div>
+                        <button class="btn-view-details">View Details</button>
+                    </div>
+                </div>
+
+                <div class="service-card" data-category="community">
+                    <div class="service-image">
+                        <img src="{% static 'images/s4.jpg' %}" alt="Community Events">
+                    </div>
+
+                    <div class="service-content">
+                        <div class="service-price">Free <span>Registration</span></div>
+                        <h3 class="service-title">Community Events Calendar</h3>
+                        <p class="service-location"><i class="fas fa-location-dot"></i> Various Community Venues</p>
+                        <div class="service-meta">
+                            <span><i class="fas fa-calendar-days"></i> Monthly</span>
+                            <span><i class="fas fa-people-group"></i> Community</span>
+                        </div>
+                        <button class="btn-view-details">View Details</button>
+                    </div>
+                </div>
+
+                <div class="service-card" data-category="community">
+                    <div class="service-image">
+                        <img src="{% static 'images/s5.jpg' %}" alt="Volunteer Program">
+                    </div>
+
+                    <div class="service-content">
+                        <div class="service-price">Free <span>Join Now</span></div>
+                        <h3 class="service-title">Volunteer Program</h3>
+                        <p class="service-location"><i class="fas fa-location-dot"></i> Community Center</p>
+                        <div class="service-meta">
+                            <span><i class="fas fa-heart"></i> Ongoing</span>
+                            <span><i class="fas fa-hands-helping"></i> Community</span>
+                        </div>
+                        <button class="btn-view-details">View Details</button>
+                    </div>
+                </div>
+
+                <div class="service-card" data-category="appointments">
+                    <div class="service-image">
+                        <img src="{% static 'images/s6.jpg' %}" alt="Health Services">
+                    </div>
+
+                    <div class="service-content">
+                        <div class="service-price">₱100 <span>Consultation</span></div>
+                        <h3 class="service-title">Health Services Portal</h3>
+                        <p class="service-location"><i class="fas fa-location-dot"></i> Health Center</p>
+                        <div class="service-meta">
+                            <span><i class="fas fa-stethoscope"></i> 30min</span>
+                            <span><i class="fas fa-briefcase-medical"></i> Health</span>
+                        </div>
+                        <button class="btn-view-details">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="service-modal" id="serviceModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal"></button>
+            <div class="modal-body">
+                <div class="modal-header">
+                    <button class="modal-back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+                    <h3 class="modal-title">Service Details</h3>
+                    <p class="modal-description"></p>
+                </div>
+
+                <div class="modal-grid">
+                    <div class="service-features">
+                        <h4><i class="fas fa-check-circle"></i> What's Included</h4>
+                        <ul class="features-list"></ul>
+                    </div>
+                    
+                    <div class="service-requirements">
+                        <h4><i class="fas fa-clipboard-list"></i> Requirements</h4>
+                        <ul class="requirements-list"></ul>
+                    </div>
+                </div>
+
+                <div class="service-stats">
+                    <div class="stat">
+                        <strong class="stat-value"></strong>
+                        <span class="stat-label"></span>
+                    </div>
+                    <div class="stat">
+                        <strong class="stat-value-2"></strong>
+                        <span class="stat-label-2"></span>
+                    </div>
+                    <div class="stat">
+                        <strong class="stat-value-3"></strong>
+                        <span class="stat-label-3"></span>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn primary full-width large">Request Service <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="service-benefits">
+        <div class="content-wrapper">
+            <div class="section-label">Why Choose Us</div>
+            <h2 class="section-title">Benefits of Digital Services</h2>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-regular fa-clock"></i></div>
+                    <h4>Fast Processing</h4>
+                    <p>Get services completed in a fraction of the traditional time with our streamlined digital processes.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <h4>Mobile Friendly</h4>
+                    <p>Access all services from your smartphone, tablet, or computer—wherever you are.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-fingerprint"></i></div>
+                    <h4>Secure & Private</h4>
+                    <p>Your personal information is protected with bank-level encryption and security measures.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-dollar-sign"></i></div>
+                    <h4>Cost Effective</h4>
+                    <p>Save on transportation and time costs. Many services are completely free to use.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-shuffle"></i></div>
+                    <h4>Track Progress</h4>
+                    <p>Monitor the status of your requests in real-time with our transparent tracking system.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-recycle"></i></div>
+                    <h4>Eco-Friendly</h4>
+                    <p>Reduce paper waste and carbon emissions with our paperless digital documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="content-wrapper">
+            <div class="section-label">Got Questions?</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How do I create an account?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Click the "Sign In" button in the navigation menu, then select "Create Account." You'll need to provide basic information and verify your email address to get started.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Are the services really free?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Most services are completely free. Some document requests may have minimal government-mandated fees. All fees are clearly displayed before you submit your request.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How long does document processing take?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Standard clearances are processed within 24-48 hours. Emergency requests can be expedited. You'll receive notifications at each step of the process.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is my personal information secure?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. We use bank-level encryption and comply with all data privacy regulations. Your information is never shared without your consent.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What if I need help using the platform?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our support team is available 24/7 via chat, email, or phone. We also provide video tutorials and a comprehensive help center.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h3>Ready to Experience Digital Convenience?</h3>
+            <p>Join thousands of satisfied users who have simplified their community interactions.</p>
+            
+            <div class="cta-buttons">
+                <a href="{% url 'account' %}" class="btn primary">Get Started Now<i class="fa-solid fa-arrow-right"></i></a>
+                <a href="{% url 'contact' %}" class="btn outline">Contact Support</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <h1 class="logo"><span>e<strong>Care</strong></span></h1>
+                    <p>Empowering communities through digital innovation and transparent governance.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/" aria-label="Twitter" target="_blank"><i class="fa-brands fa-x-twitter" ></i></a>
+                        <a href="https://instagram.com/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h1>Services</h1>
+                        <a href="{% url 'services' %}#clearance">Online Clearance</a>
+                        <a href="{% url 'services' %}#appointment">Appointments</a>
+                        <a href="{% url 'services' %}#reporting">Incident Reports</a>
+                        <a href="{% url 'services' %}#volunteer">Volunteer Program</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h1>Support</h1>
+                        <a href="{% url 'assistance' %}">Request Help</a>
+                        <a href="{% url 'contact' %}">Contact Us</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Documentation</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h1>About</h1>
+                        <a href="{% url 'about' %}">Our Mission</a>
+                        <a href="{% url 'about' %}">Our Team</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 eCare. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-to-top" id="scrollToTop">↑</button>
+    <script type="module" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

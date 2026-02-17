@@ -1,0 +1,210 @@
+[
+    {
+        "model": "core.service",
+        "pk": 1,
+        "fields": {
+            "title": "Online Clearance Request",
+            "description": "Request barangay clearances, certificates, and official documents without visiting the office. Upload requirements online and receive approved documents within 24-48 hours.",
+            "category": "documents",
+            "price": "\u20b150",
+            "badge": "Most Popular",
+            "badge_type": "prime",
+            "image": "",
+            "processing_time": "24hrs",
+            "rating": "4.9",
+            "features": [
+                "24-hour processing time",
+                "Digital signature & verification",
+                "Document tracking system",
+                "Email & SMS notifications"
+            ],
+            "requirements": [
+                "Valid ID (uploaded)",
+                "Proof of residency",
+                "Purpose statement"
+            ],
+            "stat_value1": "24hrs",
+            "stat_label1": "Avg. Processing",
+            "stat_value2": "\u20b150",
+            "stat_label2": "Service Fee",
+            "stat_value3": "4.9/5",
+            "stat_label3": "User Rating",
+            "is_active": true,
+            "order": 1
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 2,
+        "fields": {
+            "title": "Appointment Booking System",
+            "description": "Schedule appointments with barangay officials, social workers, or community services at your convenience. Choose your preferred date and time slot online.",
+            "category": "appointments",
+            "price": "Free",
+            "badge": "",
+            "badge_type": "",
+            "image": "",
+            "processing_time": "15min slots",
+            "rating": "5.0",
+            "features": [
+                "Real-time availability calendar",
+                "Automatic reminders",
+                "Easy rescheduling",
+                "Virtual meeting options"
+            ],
+            "requirements": [
+                "Legal consultations",
+                "Social services",
+                "Community programs",
+                "Document verification"
+            ],
+            "stat_value1": "15min",
+            "stat_label1": "Time Slots",
+            "stat_value2": "Free",
+            "stat_label2": "No Fee",
+            "stat_value3": "500+",
+            "stat_label3": "Monthly Bookings",
+            "is_active": true,
+            "order": 2
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 3,
+        "fields": {
+            "title": "Incident Reporting System",
+            "description": "Report emergencies, safety concerns, or community issues instantly. Our 24/7 system ensures rapid response and proper documentation of all incidents.",
+            "category": "emergency",
+            "price": "Free",
+            "badge": "24/7",
+            "badge_type": "urgent",
+            "image": "",
+            "processing_time": "Instant",
+            "rating": "4.8",
+            "features": [
+                "Instant alert notifications",
+                "Photo/video upload support",
+                "GPS location tracking",
+                "Anonymous reporting option"
+            ],
+            "requirements": [
+                "Incident description",
+                "Location details",
+                "Optional: Photos/videos",
+                "Contact information (optional for anonymous)"
+            ],
+            "stat_value1": "Instant",
+            "stat_label1": "Response",
+            "stat_value2": "24/7",
+            "stat_label2": "Available",
+            "stat_value3": "98%",
+            "stat_label3": "Resolution Rate",
+            "is_active": true,
+            "order": 3
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 4,
+        "fields": {
+            "title": "Community Events Calendar",
+            "description": "Stay updated with all barangay events, programs, and activities. Register for events, view schedules, and receive reminders for upcoming community gatherings.",
+            "category": "community",
+            "price": "Free",
+            "badge": "",
+            "badge_type": "",
+            "image": "",
+            "processing_time": "Immediate",
+            "rating": "4.7",
+            "features": [
+                "Interactive event calendar",
+                "One-click registration",
+                "Event reminders",
+                "Community updates"
+            ],
+            "requirements": [
+                "Barangay resident status",
+                "Valid contact information",
+                "Event-specific requirements (varies)"
+            ],
+            "stat_value1": "20+",
+            "stat_label1": "Events/Month",
+            "stat_value2": "Free",
+            "stat_label2": "Registration",
+            "stat_value3": "1000+",
+            "stat_label3": "Participants",
+            "is_active": true,
+            "order": 4
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 5,
+        "fields": {
+            "title": "Volunteer Program",
+            "description": "Join our community volunteer program and make a difference. Connect with various volunteer opportunities, track your hours, and earn recognition for your contributions.",
+            "category": "volunteer",
+            "price": "Free",
+            "badge": "",
+            "badge_type": "",
+            "image": "",
+            "processing_time": "Flexible",
+            "rating": "5.0",
+            "features": [
+                "Flexible scheduling",
+                "Hour tracking system",
+                "Certificate of recognition",
+                "Skills development programs"
+            ],
+            "requirements": [
+                "Age 16 and above",
+                "Valid ID",
+                "Commitment to service",
+                "Background check (for some programs)"
+            ],
+            "stat_value1": "200+",
+            "stat_label1": "Active Volunteers",
+            "stat_value2": "Free",
+            "stat_label2": "Join Now",
+            "stat_value3": "50+",
+            "stat_label3": "Programs",
+            "is_active": true,
+            "order": 5
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 6,
+        "fields": {
+            "title": "Health Services Portal",
+            "description": "Access health services including consultations, medical records, vaccination schedules, and health programs. Book appointments with healthcare professionals and manage your health records digitally.",
+            "category": "health",
+            "price": "\u20b1100",
+            "badge": "",
+            "badge_type": "",
+            "image": "",
+            "processing_time": "30min",
+            "rating": "4.8",
+            "features": [
+                "Online consultations",
+                "Digital health records",
+                "Prescription management",
+                "Health program enrollment"
+            ],
+            "requirements": [
+                "Valid ID",
+                "Health insurance (if applicable)",
+                "Medical history",
+                "Contact information"
+            ],
+            "stat_value1": "30min",
+            "stat_label1": "Consultation",
+            "stat_value2": "\u20b1100",
+            "stat_label2": "Fee",
+            "stat_value3": "4.8/5",
+            "stat_label3": "Rating",
+            "is_active": true,
+            "order": 6
+        }
+    }
+]
