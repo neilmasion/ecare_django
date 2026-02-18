@@ -2,7 +2,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a4-h*yuzwzfjiydlt3=o$6uy$0p-de1tg@#0=+f6!5q82uj7s0'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,3 +69,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL      = '/account/'
 LOGIN_REDIRECT_URL = '/'
+ALLOWED_HOSTS = ["*"]
