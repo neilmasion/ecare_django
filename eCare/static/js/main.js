@@ -4,52 +4,50 @@ import { initTestimonialSlider, initAssistanceCarousel } from './modules/sliders
 import { initFAQ } from './modules/faq.js';
 import { initAssistanceForm, initContactForm, initCharacterCount } from './modules/forms.js';
 import { initServiceModal, initServiceCategories } from './modules/services.js';
-import { 
-  initScrollToTop, 
-  initChatButtons, 
+import {
+  initScrollToTop,
+  initChatButtons,
   initSmoothAnchors,
   initFormInputAnimations,
   initPageLoadAnimation,
-  initParallaxHero,
   initKonamiCode,
   initSmoothScroll,
-  initNavbarHide
+  initScrollListeners   
 } from './modules/ui.js';
 
 function initApp() {
   // NAVIGATION
   initNavbar();
   initMobileMenu();
-  
+
   // ANIMATIONS
   initScrollAnimations();
   initCounters();
-  
+
   // SLIDERS
   initTestimonialSlider();
   initAssistanceCarousel();
-  
+
   // FAQ
   initFAQ();
-  
+
   // FORMS
   initAssistanceForm();
   initContactForm();
   initCharacterCount();
-  
+
   // SERVICES
   initServiceModal();
   initServiceCategories();
 
   // UI
-  initScrollToTop();
+  initScrollToTop();      
   initChatButtons();
   initSmoothAnchors();
   initFormInputAnimations();
-  initParallaxHero();
   initKonamiCode();
-  initSmoothScroll();
-  initNavbarHide();
+  initSmoothScroll();      
+  initScrollListeners();   
 }
 
 document.addEventListener('DOMContentLoaded', initApp);

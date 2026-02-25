@@ -1,4 +1,5 @@
 import { createConfetti } from '../helpers.js';
+import { scrollTo } from './ui.js';
 
 function getCsrfToken() {
   const value = `; ${document.cookie}`;
@@ -35,7 +36,7 @@ export function initAssistanceForm() {
     currentStep = step;
     if (currentStepEl) currentStepEl.textContent = step;
     if (progressFill)  progressFill.style.width  = `${(step / steps.length) * 100}%`;
-    window.targetScroll = form.offsetTop - 100;
+    scrollTo(form.getBoundingClientRect().top + window.scrollY - 100);
   }
 
   function validateCurrentStep() {
@@ -86,8 +87,10 @@ export function initAssistanceForm() {
       if (result.success) {
         if (referenceEl) referenceEl.textContent = result.reference_number;
         form.style.display = 'none';
-        if (successMessage) successMessage.classList.remove('hidden');
-        window.targetScroll = (successMessage?.offsetTop ?? 0) - 100;
+        if (successMessage) {
+          successMessage.classList.remove('hidden');
+          scrollTo(successMessage.getBoundingClientRect().top + window.scrollY - 100);
+        }
         createConfetti();
       } else {
         alert(result.message || 'Submission failed. Please try again.');
@@ -125,7 +128,7 @@ export function initContactForm() {
         form.style.display = 'none';
         if (successMessage) {
           successMessage.classList.remove('hidden');
-          window.scrollTo({ top: successMessage.offsetTop - 100, behavior: 'smooth' });
+          scrollTo(successMessage.getBoundingClientRect().top + window.scrollY - 100);
         }
         createConfetti();
       } else {

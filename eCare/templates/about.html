@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="{% static 'css/query.css' %}">
 </head>
 <body>
+    <div id="page-loader">
+        <div class="loader-logo">e<strong>Care</strong></div>
+        <div class="loader-spinner"></div>
+        <span class="loader-text">Loading...</span>
+    </div>
+
     <header class="navbar" id="navbar">
         <div class="nav-container">
             <a href="{% url 'index' %}" class="logo"><span class="logo-icon"></span><span>e<strong>Care</strong></span></a>
@@ -345,5 +351,32 @@
 
     <button class="scroll-to-top" id="scrollToTop">↑</button>
     <script type="module" src="{% static 'js/main.js' %}"></script>
+    <script>
+        (function () {
+            var loader = document.getElementById('page-loader');
+            if (!loader) return;
+
+            function hideLoader() {
+                loader.style.opacity = '0';
+                setTimeout(function () {
+                    if (loader && loader.parentNode) {
+                        loader.parentNode.removeChild(loader);
+                    }
+                }, 500);
+            }
+
+            var maxWait = setTimeout(hideLoader, 4000);
+
+            if (document.readyState === 'complete') {
+                clearTimeout(maxWait);
+                setTimeout(hideLoader, 250);
+            } else {
+                window.addEventListener('load', function () {
+                    clearTimeout(maxWait);
+                    setTimeout(hideLoader, 250);
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

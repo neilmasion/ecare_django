@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="{% static 'css/query.css' %}">
 </head>
 <body class="auth-body">
+    <div id="page-loader">
+        <div class="loader-logo">e<strong>Care</strong></div>
+        <div class="loader-spinner"></div>
+        <span class="loader-text">Loading...</span>
+    </div>
+
     <div class="auth-background">
         <div class="auth-shape shape-1"></div>
         <div class="auth-shape shape-2"></div>
@@ -197,6 +203,32 @@
                 });
             });
         });
+        
+        (function () {
+            var loader = document.getElementById('page-loader');
+            if (!loader) return;
+
+            function hideLoader() {
+                loader.style.opacity = '0';
+                setTimeout(function () {
+                    if (loader && loader.parentNode) {
+                        loader.parentNode.removeChild(loader);
+                    }
+                }, 500);
+            }
+
+            var maxWait = setTimeout(hideLoader, 4000);
+
+            if (document.readyState === 'complete') {
+                clearTimeout(maxWait);
+                setTimeout(hideLoader, 250);
+            } else {
+                window.addEventListener('load', function () {
+                    clearTimeout(maxWait);
+                    setTimeout(hideLoader, 250);
+                });
+            }
+        })();
     </script>
 </body>
 </html>
