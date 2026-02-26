@@ -1,11 +1,18 @@
 import json
-from django.shortcuts import render, redirect
+import logging
+import os
+from django.shortcuts import render
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Service, ContactSubmission, AssistanceRequest, UserProfile
+
+logger = logging.getLogger(__name__)
+ALLOWED_AVATAR_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp', '.gif'}
+MAX_AVATAR_SIZE_MB = 5
 
 def index(request):
     services = Service.objects.filter(is_active=True)[:6]
@@ -56,7 +63,8 @@ def login_view(request):
         return JsonResponse({'success': False, 'message': 'Invalid email or password.'}, status=400)
 
     except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+        logger.error('login_view error: %s', e, exc_info=True)
+        return JsonResponse({'success': False, 'message': 'Something went wrong. Please try again.'}, status=500)
 
 @require_POST
 def signup_view(request):
@@ -91,13 +99,15 @@ def signup_view(request):
         return JsonResponse({'success': True, 'message': 'Account created successfully!'})
 
     except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+        logger.error('signup_view error: %s', e, exc_info=True)
+        return JsonResponse({'success': False, 'message': 'Something went wrong. Please try again.'}, status=500)
 
 @require_POST
 def logout_view(request):
     logout(request)
     return JsonResponse({'success': True})
 
+@login_required(login_url='/account/')
 @require_POST
 def submit_contact(request):
     try:
@@ -111,22 +121,23 @@ def submit_contact(request):
         )
         return JsonResponse({'success': True, 'message': 'Message sent!'})
     except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+        logger.error('submit_contact error: %s', e, exc_info=True)
+        return JsonResponse({'success': False, 'message': 'Something went wrong. Please try again.'}, status=500)
 
-
+@login_required(login_url='/account/')
 @require_POST
 def submit_assistance(request):
     try:
         data       = json.loads(request.body)
         assistance = AssistanceRequest.objects.create(
-            first_name      = data.get('firstName',     ''),
-            last_name       = data.get('lastName',      ''),
-            email           = data.get('email',         ''),
-            phone           = data.get('phone',         ''),
-            address         = data.get('address',       ''),
-            assistance_type = data.get('assistanceType',''),
-            urgency         = data.get('urgency',       'medium'),
-            description     = data.get('description',  ''),
+            first_name      = data.get('firstName',      ''),
+            last_name       = data.get('lastName',       ''),
+            email           = data.get('email',          ''),
+            phone           = data.get('phone',          ''),
+            address         = data.get('address',        ''),
+            assistance_type = data.get('assistanceType', ''),
+            urgency         = data.get('urgency',        'medium'),
+            description     = data.get('description',   ''),
         )
         return JsonResponse({
             'success':          True,
@@ -134,7 +145,8 @@ def submit_assistance(request):
             'message':          'Request submitted!',
         })
     except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+        logger.error('submit_assistance error: %s', e, exc_info=True)
+        return JsonResponse({'success': False, 'message': 'Something went wrong. Please try again.'}, status=500)
 
 def services_api(request):
     services = Service.objects.filter(is_active=True).values(
@@ -146,8 +158,6 @@ def services_api(request):
         'badge', 'badge_type', 'processing_time', 'rating',
     )
     return JsonResponse({'services': list(services)})
-
-from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/account/')
 def profile(request):
@@ -179,16 +189,17 @@ def update_profile(request):
 
         return JsonResponse({'success': True, 'message': 'Profile updated!'})
     except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+        logger.error('update_profile error: %s', e, exc_info=True)
+        return JsonResponse({'success': False, 'message': 'Something went wrong. Please try again.'}, status=500)
 
 @login_required(login_url='/account/')
 @require_POST
 def change_password(request):
     try:
-        data         = json.loads(request.body)
-        current_pwd  = data.get('currentPassword', '')
-        new_pwd      = data.get('newPassword', '')
-        confirm_pwd  = data.get('confirmPassword', '')
+        data        = json.loads(request.body)
+        current_pwd = data.get('currentPassword', '')
+        new_pwd     = data.get('newPassword',     '')
+        confirm_pwd = data.get('confirmPassword', '')
 
         if not request.user.check_password(current_pwd):
             return JsonResponse({'success': False, 'message': 'Current password is incorrect.'}, status=400)
@@ -199,23 +210,40 @@ def change_password(request):
 
         request.user.set_password(new_pwd)
         request.user.save()
-
-        from django.contrib.auth import update_session_auth_hash
         update_session_auth_hash(request, request.user)
 
         return JsonResponse({'success': True, 'message': 'Password changed successfully!'})
     except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+        logger.error('change_password error: %s', e, exc_info=True)
+        return JsonResponse({'success': False, 'message': 'Something went wrong. Please try again.'}, status=500)
 
 @login_required(login_url='/account/')
 @require_POST
 def upload_avatar(request):
     try:
+        if 'avatar' not in request.FILES:
+            return JsonResponse({'success': False, 'message': 'No file uploaded.'}, status=400)
+
+        avatar_file = request.FILES['avatar']
+
+        ext = os.path.splitext(avatar_file.name)[1].lower()
+        if ext not in ALLOWED_AVATAR_EXTENSIONS:
+            return JsonResponse({
+                'success': False,
+                'message': 'Invalid file type. Only JPG, PNG, WEBP, and GIF are allowed.'
+            }, status=400)
+
+        if avatar_file.size > MAX_AVATAR_SIZE_MB * 1024 * 1024:
+            return JsonResponse({
+                'success': False,
+                'message': f'File too large. Maximum size is {MAX_AVATAR_SIZE_MB}MB.'
+            }, status=400)
+
         profile, _ = UserProfile.objects.get_or_create(user=request.user)
-        if 'avatar' in request.FILES:
-            profile.avatar = request.FILES['avatar']
-            profile.save()
-            return JsonResponse({'success': True, 'avatar_url': profile.avatar.url})
-        return JsonResponse({'success': False, 'message': 'No file uploaded.'}, status=400)
+        profile.avatar = avatar_file
+        profile.save()
+        return JsonResponse({'success': True, 'avatar_url': profile.avatar.url})
+
     except Exception as e:
-        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+        logger.error('upload_avatar error: %s', e, exc_info=True)
+        return JsonResponse({'success': False, 'message': 'Something went wrong. Please try again.'}, status=500)
