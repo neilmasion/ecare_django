@@ -47,7 +47,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'eCare.wsgi.application'
+WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
